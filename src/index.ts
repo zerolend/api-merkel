@@ -4,7 +4,7 @@ import cors from "cors";
 import express from "express";
 import {Router} from "express"
 import nconf from "nconf";
-import { getProofs } from "./merkleProof";
+import { getProofs } from "./controller/merkleProof";
 
 const app = express();
 const server = new http.Server(app);
