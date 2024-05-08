@@ -8,6 +8,11 @@ import { getProofs } from "./controller/merkleProof";
 const app = express();
 const server = new http.Server(app);
 
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get("/", (_req, res) => {
     res.json({
       uptime: process.uptime(),
@@ -15,10 +20,6 @@ app.get("/", (_req, res) => {
       message: "fuck off",
     });
   });
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
   
 app.get("/merkleProof",getProofs );
 
