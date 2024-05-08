@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import fs from "fs";
+import data from './proof.json'
 
 interface AddressData {
   address: string;
@@ -7,11 +7,15 @@ interface AddressData {
   proofs: string[];
 }
 
-const data = fs.readFileSync(__dirname + "/proof.json");
-const json = JSON.parse(data.toString());
+interface JSONData {
+  addressData: AddressData[];
+}
+
+// const data = fs.readFileSync(__dirname + "/proof.json");
+const jsonData: JSONData = data as JSONData;
 
 const getDataForAddress = (walletAddress: string) => {
-  return json.addressData.find(
+  return jsonData.addressData.find(
     (e: AddressData) => e.address.toLowerCase() === walletAddress.toLowerCase()
   );
 };
