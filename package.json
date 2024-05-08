@@ -30,7 +30,8 @@
     "ethers": "^6.12.1",
     "express": "^4.19.2",
     "http": "^0.0.1-security",
-    "nconf": "^0.12.1"
+    "nconf": "^0.12.1",
+    "rimraf": "^5.0.5"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
