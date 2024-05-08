@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { ethers } from "ethers";
-import axios from "axios";
+import fs from "fs";
 
 interface AddressData {
   address: string;
@@ -8,45 +7,22 @@ interface AddressData {
   proofs: string[];
 }
 
-let addressData: AddressData[];
+const data = fs.readFileSync(__dirname + "/proof.json");
+const json = JSON.parse(data.toString());
 
 const getDataForAddress = (walletAddress: string) => {
-  return addressData.find(
-    (e) => e.address.toLowerCase() === walletAddress.toLowerCase()
+  return json.addressData.find(
+    (e: AddressData) => e.address.toLowerCase() === walletAddress.toLowerCase()
   );
 };
 
 export const getProofs = async (req: Request, res: Response) => {
-  const walletAddress: string = req.query.walletAddress as string;
-  console.log(walletAddress);
-  
-  if (walletAddress && ethers.isAddress(walletAddress)) {
-    if (addressData) {
-      const data = getDataForAddress(walletAddress);
-      if (data) {
-        res.json(data);
-        // console.log('fetched from cahce');
-        
-      } else {
-        res.json(`data for address ${walletAddress} not found`);
-      }
-    } else {
-      try {
-        const response = await axios.get(
-          "https://raw.githubusercontent.com/deadshotryker/merklxe/master/v1.json"
-        );
-        addressData = response.data.addressData;
-        const data = getDataForAddress(walletAddress);
-        if (data) {
-          res.json(data);
-        // console.log('fetched from url');
-        } else {
-          res.json(`data for address ${walletAddress} not found`);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        //   throw error;
-      }
-    }
+  const walletAddress: string = (req.query.walletAddress as string) || "";
+
+  if (walletAddress && walletAddress.length > 1) {
+    const data = getDataForAddress(walletAddress);
+    res.json(data);
+  } else {
+    res.json({ found: false });
   }
 };
