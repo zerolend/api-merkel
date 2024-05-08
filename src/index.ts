@@ -10,13 +10,13 @@ const app = express();
 const server = new http.Server(app);
 const router = Router();
 
-router.get("/", (_req, res) => {
-    res.json({
-      uptime: process.uptime(),
-      online: true,
-      message: "fuck off",
-    });
-  });
+// router.get("/", (_req, res) => {
+//     res.json({
+//       uptime: process.uptime(),
+//       online: true,
+//       message: "fuck off",
+//     });
+//   });
 
 router.get("/merkleProof",getProofs );
 

@@ -25,7 +25,7 @@ export const getProofs = async (req: Request, res: Response) => {
       const data = getDataForAddress(walletAddress);
       if (data) {
         res.json(data);
-        console.log('fetched from cahce');
+        // console.log('fetched from cahce');
         
       } else {
         res.json(`data for address ${walletAddress} not found`);
@@ -33,13 +33,13 @@ export const getProofs = async (req: Request, res: Response) => {
     } else {
       try {
         const response = await axios.get(
-          "https://raw.githubusercontent.com/deadshotryker/merkle/master/v1.json"
+          "https://raw.githubusercontent.com/deadshotryker/merklxe/master/v1.json"
         );
         addressData = response.data.addressData;
         const data = getDataForAddress(walletAddress);
         if (data) {
           res.json(data);
-        console.log('fetched from url');
+        // console.log('fetched from url');
         } else {
           res.json(`data for address ${walletAddress} not found`);
         }
